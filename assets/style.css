@@ -20,7 +20,7 @@ a:hover { color: #e73e7e; }
 .home-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px 30px; }
 .card { display: block; }
 .card .card-img { width: 100%; aspect-ratio: 324 / 235; object-fit: cover; }
-.card .card-title { margin-top: 22px; font-size: 19px; font-weight: 700; line-height: 1.35; color: #222; }
+.card .card-title { margin-top: 22px; font-size: 19px; font-weight: 500; line-height: 1.35; color: #222; }
 .card:hover .card-title { color: #4caf50; }
 @media (max-width: 900px) { .home-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 560px) { .home-grid { grid-template-columns: 1fr; } }
