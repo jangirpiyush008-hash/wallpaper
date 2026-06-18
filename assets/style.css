@@ -29,8 +29,22 @@ a:hover { color: #e73e7e; }
 .post-inline-img { margin: 28px 0; }
 .post-inline-img img { width: 100%; max-height: 640px; object-fit: cover; }
 
-/* ---------- INFINITE LOADER ---------- */
-.infinite-loader { text-align: center; padding: 30px 20px; color: #888; font-size: 13px; }
+/* ---------- INFINITE LOADER + LOAD MORE BUTTON ---------- */
+.load-more-wrap { text-align: center; padding: 30px 20px 40px; }
+.infinite-loader { color: #888; font-size: 13px; padding: 10px 0; }
+.load-more-btn {
+  display: none;
+  background: #ff2d75;
+  color: #fff;
+  border: 0;
+  font: 700 13px/1 "Open Sans", sans-serif;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 14px 32px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.load-more-btn:hover { background: #d92263; }
 
 /* ---------- PAGINATION ---------- */
 .pagination { max-width: 1200px; margin: 30px auto; padding: 0 20px; display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }

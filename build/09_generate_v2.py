@@ -104,7 +104,10 @@ def render_listing_page(items, active, page_title, out_file, header_html=None):
     body = f"""{head}
 <div class="home-wrap">
   <div class="home-grid"></div>
-  <div id="infinite-loader" class="infinite-loader">Loading more…</div>
+  <div class="load-more-wrap">
+    <div id="infinite-loader" class="infinite-loader">Loading more…</div>
+    <button id="load-more-btn" class="load-more-btn" type="button">Load More</button>
+  </div>
 </div>
 <script>window.__cards = {cards_json};</script>
 <script src="assets/infinite.js" defer></script>
