@@ -1,0 +1,19 @@
+# Subagent batch outputs (consolidated into data/articles_full.json)
+data/rewrite_batches/
+articles_*.json
+!data/articles_*.json
+extended_articles_*.json
+generated_*.json
+
+# Python
+__pycache__/
+*.pyc
+
+# OS / editor
+.DS_Store
+*.swp
+.vscode/
+.idea/
+
+# Local Claude config / launch
+.claude/launch.json
