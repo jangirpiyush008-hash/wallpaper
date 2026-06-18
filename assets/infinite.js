@@ -3,7 +3,7 @@
 // Lets the footer be reachable instead of endlessly pushed down.
 (function () {
   if (!window.__cards) return;
-  var BATCH = 30;
+  var BATCH = 15;
   var AUTO_BATCHES = 3; // auto-load this many scroll-triggered batches before stopping
   var rendered = 0;
   var autoCount = 0;
