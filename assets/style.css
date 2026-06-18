@@ -7,11 +7,11 @@ a:hover { color: #e73e7e; }
 
 /* ---------- HEADER ---------- */
 .site-header { background: #fff; border-bottom: 1px solid #eaeaea; }
-.header-inner { max-width: 1200px; margin: 0 auto; padding: 18px 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
-.logo { font-family: "Dancing Script", "Brush Script MT", cursive; font-size: 36px; color: #ff2d75; font-weight: 700; line-height: 1; }
+.header-inner { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; align-items: stretch; justify-content: space-between; flex-wrap: wrap; gap: 16px; min-height: 80px; }
+.logo { font-family: "Dancing Script", "Brush Script MT", cursive; font-size: 36px; color: #ff2d75; font-weight: 700; line-height: 1; display: flex; align-items: center; }
 .logo a { color: #ff2d75; }
-.main-nav { display: flex; gap: 0; flex-wrap: wrap; }
-.main-nav a { padding: 8px 14px; font-size: 12px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: #222; }
+.main-nav { display: flex; gap: 0; flex-wrap: wrap; align-self: stretch; }
+.main-nav a { display: flex; align-items: center; padding: 0 22px; font-size: 14px; font-weight: 900; letter-spacing: .8px; text-transform: uppercase; color: #222; }
 .main-nav a:hover { color: #ff2d75; }
 .main-nav a.active { background: #ffd400; color: #000; }
 
