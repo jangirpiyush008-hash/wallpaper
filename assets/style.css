@@ -1,6 +1,6 @@
 /* Newspaper 12.6.6 inspired stylesheet for Wallpaper Data */
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: "Open Sans", -apple-system, BlinkMacSystemFont, Roboto, Arial, sans-serif; color: #222; background: #fff; font-size: 14px; line-height: 1.6; }
+body { font-family: "Roboto", -apple-system, BlinkMacSystemFont, Roboto, Arial, sans-serif; color: #222; background: #fff; font-size: 14px; line-height: 1.6; }
 img { max-width: 100%; height: auto; display: block; }
 a { color: #222; text-decoration: none; }
 a:hover { color: #e73e7e; }
@@ -16,11 +16,11 @@ a:hover { color: #e73e7e; }
 .main-nav a.active { background: #ffd400; color: #000; }
 
 /* ---------- HOME GRID ---------- */
-.home-wrap { background: #fff79e; padding: 28px 20px 40px; }
+.home-wrap { background: #fff; padding: 28px 20px 40px; }
 .home-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px 30px; }
 .card { display: block; }
 .card .card-img { width: 100%; aspect-ratio: 324 / 235; object-fit: cover; }
-.card .card-title { margin-top: 14px; font-size: 18px; font-weight: 700; line-height: 1.3; color: #222; }
+.card .card-title { margin-top: 14px; font-size: 18px; font-weight: 800; line-height: 1.3; color: #222; }
 .card:hover .card-title { color: #4caf50; }
 @media (max-width: 900px) { .home-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 560px) { .home-grid { grid-template-columns: 1fr; } }
@@ -37,7 +37,7 @@ a:hover { color: #e73e7e; }
   background: #ff2d75;
   color: #fff;
   border: 0;
-  font: 700 13px/1 "Open Sans", sans-serif;
+  font: 700 13px/1 "Roboto", sans-serif;
   letter-spacing: 1.5px;
   text-transform: uppercase;
   padding: 14px 32px;
