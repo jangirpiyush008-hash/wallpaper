@@ -34,17 +34,19 @@ a:hover { color: #e73e7e; }
 .infinite-loader { color: #888; font-size: 13px; padding: 10px 0; }
 .load-more-btn {
   display: none;
-  background: #ff2d75;
-  color: #fff;
-  border: 0;
-  font: 700 13px/1 "Roboto", sans-serif;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  padding: 14px 32px;
+  background: #fff;
+  color: #222;
+  border: 1px solid #ccc;
+  font: 400 13px/1 "Roboto", sans-serif;
+  letter-spacing: .5px;
+  text-transform: none;
+  padding: 12px 28px;
   cursor: pointer;
-  transition: background 0.15s;
+  border-radius: 2px;
+  transition: border-color 0.15s, color 0.15s;
 }
-.load-more-btn:hover { background: #d92263; }
+.load-more-btn::after { content: " ›"; font-weight: 700; margin-left: 4px; }
+.load-more-btn:hover { border-color: #888; color: #000; }
 
 /* ---------- PAGINATION ---------- */
 .pagination { max-width: 1200px; margin: 30px auto; padding: 0 20px; display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
@@ -106,13 +108,12 @@ a:hover { color: #e73e7e; }
 .side-card .s-meta a { color: #555; font-weight: 600; }
 
 /* ---------- FOOTER ---------- */
-.site-footer { background: #222; color: #bbb; margin-top: 50px; padding: 36px 20px 20px; font-size: 13px; }
-.footer-inner { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 40px; justify-content: space-between; }
-.footer-col h4 { color: #fff; font-size: 13px; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 14px; }
-.footer-col a { color: #bbb; display: block; padding: 4px 0; }
-.footer-col a:hover { color: #ff2d75; }
-.footer-logo { font-family: "Dancing Script", cursive; font-size: 36px; color: #ff2d75; margin-bottom: 12px; }
-.footer-bottom { max-width: 1200px; margin: 30px auto 0; padding-top: 18px; border-top: 1px solid #333; text-align: center; color: #777; font-size: 12px; }
+.site-footer { background: #111; color: #bbb; margin-top: 60px; padding: 30px 20px; font-size: 14px; }
+.footer-inner { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px; }
+.footer-links { display: flex; gap: 32px; flex-wrap: wrap; }
+.footer-links a { color: #fff; font-weight: 700; font-size: 15px; }
+.footer-links a:hover { color: #ff2d75; }
+.footer-copy { color: #888; font-size: 12px; }
 
 /* ---------- CATEGORY HEADER ---------- */
 .cat-header { max-width: 1200px; margin: 28px auto 0; padding: 0 20px; }
