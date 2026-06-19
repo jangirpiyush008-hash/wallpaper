@@ -100,15 +100,15 @@ for hp in header_paragraphs[:6]:
     if hp and len(hp) > 20:
         parts.append(f"<p>{esc(hp)}</p>")
 
-# Sections
+# Sections — order matches docx: image first, then heading, then body paragraphs
 for s in sections:
-    parts.append(f'<h2 class="gallery-h2">{esc(s["title"])}</h2>')
-    for img_name in s["imgs"][:1]:  # one image per section is typical
+    for img_name in s["imgs"][:1]:
         local = extracted.get(img_name)
         if local:
             parts.append(f'<figure class="post-inline-img"><img src="{local}" alt="{esc(s["title"])}" loading="lazy"></figure>')
+    parts.append(f'<h2 class="gallery-h2">{esc(s["title"])}</h2>')
     for para in s["paras"]:
-        # Skip very short credit lines (image credits like "Historia/Shutterstock")
+        # Image credit lines (e.g. "Historia/Shutterstock") get italic styling
         if 0 < len(para) < 60 and re.search(r"(Shutterstock|Getty|Alamy|AP Photo|Reuters)", para, re.I):
             parts.append(f'<p class="img-credit"><em>{esc(para)}</em></p>')
         else:
