@@ -127,21 +127,32 @@ print(f"Authors: {len(by_author)} pages")
 
 # Article pages
 random.seed(42)
-def sidebar_html(current_slug):
-    pool = [a for a in arts if a["slug"] != current_slug]
-    picks = random.sample(pool, min(5, len(pool)))
-    parts = ['<aside class="sidebar"><div class="sidebar-title">CHECK THIS OUT</div>']
-    for p in picks:
-        img = p.get("thumb_local") or p.get("hero_local") or ""
-        cat = p.get("category", "")
-        parts.append(f"""<div class="side-card">
+def render_side_card(p, show_cat_badge=False):
+    img = p.get("thumb_local") or p.get("hero_local") or ""
+    cat = p.get("category", "")
+    badge = f'<span class="cat-badge">{escape(cat)}</span>' if show_cat_badge else ""
+    return f"""<div class="side-card">
   <a href="article-{p['slug']}.html" class="img-wrap">
     <img src="{img}" alt="{escape(p['title'])}" loading="lazy">
-    <span class="cat-badge">{escape(cat)}</span>
+    {badge}
   </a>
   <a href="article-{p['slug']}.html" class="s-title">{escape(p['title'])}</a>
-  <div class="s-meta"><a href="author-{p['author_slug']}.html">{escape(p['author'])}</a> &nbsp;-&nbsp; {escape(p['date'])}</div>
-</div>""")
+  <div class="s-meta">{escape(p['date'])}</div>
+</div>"""
+
+def sidebar_html(current_slug):
+    pool = [a for a in arts if a["slug"] != current_slug]
+    check_this_out = random.sample(pool, min(2, len(pool)))
+    # Popular = take fixed deterministic top picks (oldest known curated ones)
+    popular_pool = [a for a in pool if a not in check_this_out]
+    popular = random.sample(popular_pool, min(4, len(popular_pool)))
+    parts = ['<aside class="sidebar">']
+    parts.append('<div class="sidebar-title">CHECK THIS OUT</div>')
+    for p in check_this_out:
+        parts.append(render_side_card(p))
+    parts.append('<div class="sidebar-title">POPULAR</div>')
+    for p in popular:
+        parts.append(render_side_card(p))
     parts.append("</aside>")
     return "\n".join(parts)
 
