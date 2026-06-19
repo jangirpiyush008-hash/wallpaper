@@ -49,10 +49,13 @@ def paragraph_images(p):
             found.append(rid_to_imgname[rid])
     return found
 
-# --- Step 3: parse into sections ---
-sections = []
-current = None
-header_paragraphs = []
+# --- Step 3: walk paragraphs in EXACT docx order and emit blocks ---
+def esc(s):
+    return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+
+parts = []
+first_image_local = None
+last_h2_alt = "Photo"
 
 for p in doc.paragraphs:
     text = p.text.strip()
@@ -60,59 +63,34 @@ for p in doc.paragraphs:
     imgs = paragraph_images(p)
 
     if style == "Heading 1":
-        continue  # site already has the title separately
+        continue  # site already prints the article title from the header
+
     if style == "Heading 2":
-        # start a new section
-        if current:
-            sections.append(current)
-        current = {"title": text, "paras": [], "imgs": []}
-        continue
-    # body paragraph
-    if current is None:
-        # pre-first-section content = intro
         if text:
-            header_paragraphs.append(text)
-        if imgs:
-            for n in imgs:
-                if n not in [x for s in sections for x in s["imgs"]]:
-                    pass  # will be handled below
+            parts.append(f'<h2 class="gallery-h2">{esc(text)}</h2>')
+            last_h2_alt = text
+        # If the heading paragraph also carries inline images, emit them too
+        for img_name in imgs:
+            local = extracted.get(img_name)
+            if local:
+                parts.append(f'<figure class="post-inline-img"><img src="{local}" alt="{esc(last_h2_alt)}" loading="lazy"></figure>')
+                if first_image_local is None:
+                    first_image_local = local
         continue
-    if imgs:
-        current["imgs"].extend(imgs)
-    if text:
-        current["paras"].append(text)
 
-if current:
-    sections.append(current)
-
-print(f"Sections parsed: {len(sections)}")
-
-# Filter: keep only sections that have at least 1 image OR a substantial title (drop empty/heading-like noise)
-sections = [s for s in sections if (s["imgs"] or len(s["title"]) < 80)]
-
-# --- Step 4: build the HTML body ---
-def esc(s):
-    return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
-
-parts = []
-# Intro
-for hp in header_paragraphs[:6]:
-    if hp and len(hp) > 20:
-        parts.append(f"<p>{esc(hp)}</p>")
-
-# Sections — order matches docx: image first, then heading, then body paragraphs
-for s in sections:
-    for img_name in s["imgs"][:1]:
+    # Normal body paragraph: emit image(s) inline, then text (preserves docx flow)
+    for img_name in imgs:
         local = extracted.get(img_name)
         if local:
-            parts.append(f'<figure class="post-inline-img"><img src="{local}" alt="{esc(s["title"])}" loading="lazy"></figure>')
-    parts.append(f'<h2 class="gallery-h2">{esc(s["title"])}</h2>')
-    for para in s["paras"]:
-        # Image credit lines (e.g. "Historia/Shutterstock") get italic styling
-        if 0 < len(para) < 60 and re.search(r"(Shutterstock|Getty|Alamy|AP Photo|Reuters)", para, re.I):
-            parts.append(f'<p class="img-credit"><em>{esc(para)}</em></p>')
+            parts.append(f'<figure class="post-inline-img"><img src="{local}" alt="{esc(last_h2_alt)}" loading="lazy"></figure>')
+            if first_image_local is None:
+                first_image_local = local
+
+    if text:
+        if 0 < len(text) < 60 and re.search(r"(Shutterstock|Getty|Alamy|AP Photo|Reuters)", text, re.I):
+            parts.append(f'<p class="img-credit"><em>{esc(text)}</em></p>')
         else:
-            parts.append(f"<p>{esc(para)}</p>")
+            parts.append(f"<p>{esc(text)}</p>")
 
 body_html = "\n".join(parts)
 word_count = sum(len(re.sub(r"<[^>]+>", " ", p).split()) for p in parts)
@@ -125,16 +103,10 @@ if not target:
     print("Article not found — was supposed to be added earlier. Aborting.")
     raise SystemExit(1)
 
-# Pick the first image as the new hero (more relevant than the OG image)
-first_img = None
-for s in sections:
-    if s["imgs"]:
-        first_img = extracted.get(s["imgs"][0])
-        break
-
-if first_img:
-    target["hero_local"] = first_img
-    target["thumb_local"] = first_img
+# Pick the first encountered image (from docx walk above) as the new hero
+if first_image_local:
+    target["hero_local"] = first_image_local
+    target["thumb_local"] = first_image_local
 
 target["body_rewritten"] = body_html
 target["final_body_html"] = body_html
